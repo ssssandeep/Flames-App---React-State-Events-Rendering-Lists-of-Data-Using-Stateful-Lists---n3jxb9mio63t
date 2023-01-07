@@ -21,7 +21,11 @@ const App = () => {
         
     }
 
-    const commonCharacterCount = (str1 = '', str2 = '') => {
+    const handleClear = () => {
+        setInputss({input1:"", input2:""})
+    }
+
+    const find = (str1,str2 ) => {
         let count = 0;
         str1 = str1.split('');
         str2 = str2.split('');
@@ -31,31 +35,43 @@ const App = () => {
               str2.splice(str2.indexOf(e), 1);
            };
         });
-        return count;
+        return str1.length+str2.length;
      };
 
     const calculateRelationship = () => {
         console.log("calculating relationship")
-        const x = inputs.input1.length + inputs.input2.length;
-        const y = commonCharacterCount(inputs.input1 , inputs.input2)
-        const z = (x-y)%6;
-        let ans = ''
-        switch(z){
-            case 1: ans="Friends";break;
-            case 2: ans="Love";break;
-            case 3: ans="Affection";break;
-            case 4: ans="Marriage";break;
-            case 5: ans="Enemy";break;
-            case 6: ans="Siblings";break;
+        if(inputs.input1.length === 0){
+            setAnswer('Please Enter valid input')
+            return;
+        }else if(inputs.input2.length === 0){
+            setAnswer('Please Enter valid input')
+            return;
         }
-        setAnswer(ans);
+        else{
+            
+            const x = find(inputs.input1 , inputs.input2)%6;
+            console.log(x)
+            let ans = ''
+            switch(x){
+                case 1: ans="Friends";break;
+                case 2: ans="Love";break;
+                case 3: ans="Affection";break;
+                case 4: ans="Marriage";break;
+                case 5: ans="Enemy";break;
+                case 0: ans="Siblings";break;
+
+            }
+            setAnswer(ans);
+        }
+        
     }
+    
     return(
         <div id="main">
-            <input data-testid="input1" onChange={handleInputChange}  />
-            <input data-testid="input2" onChange={handleInputChange}  />
-            <button data-testid="calculate_relationship" onClick={calculateRelationship}>Calculate Relationship</button>
-            <button data-testid="clear">Clear</button>
+            <input data-testid="input1" onChange={handleInputChange} value={inputs.input1} />
+            <input data-testid="input2" onChange={handleInputChange} value={inputs.input2} />
+            <button data-testid="calculate_relationship" onClick={calculateRelationship}>Calculate Relationship Future</button>
+            <button data-testid="clear" onClick={handleClear}>Clear</button>
             <h3 data-testid="answer">{answer}</h3>
         </div>
     )
