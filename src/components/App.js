@@ -29,13 +29,21 @@ const App = () => {
         let count = 0;
         str1 = str1.split('');
         str2 = str2.split('');
-        str1.forEach(e => {
-           if (str2.includes(e)) {
-              count++;
-              str2.splice(str2.indexOf(e), 1);
-           };
+        const arr = new Array(26);
+        arr.fill(0);
+        console.log("arr is "+arr)
+        str1.forEach((e,i) => {
+            arr[e-'0']++;
         });
-        return str1.length+str2.length;
+        str1.forEach((e,i) => {
+            arr[e-'0']--;
+        })
+        let x =0;
+        arr.forEach(e => {
+            x = x + Math.abs(e);
+        })
+        console.log(x);
+        return x;
      };
 
     const calculateRelationship = () => {
