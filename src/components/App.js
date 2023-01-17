@@ -22,6 +22,7 @@ const App = () => {
 
     const handleClear = () => {
         setInputss({input1:"", input2:""})
+        setAnswer('')
     }
 
     const find = (str1,str2 ) => {
