@@ -8,7 +8,6 @@ const App = () => {
     const handleInputChange = (event) => {
         const id = event.target.getAttribute("data-testid");
         const data = event.target.value;
-        console.log(data);
         if(id === "input1"){
             let obj = {...inputs}
             obj.input1 = data;
@@ -27,22 +26,34 @@ const App = () => {
 
     const find = (str1,str2 ) => {
         let count = 0;
-        str1 = str1.split('');
-        str2 = str2.split('');
-        const arr = new Array(26);
-        arr.fill(0);
-        console.log("arr is "+arr)
+        str1 = str1.toLowerCase().split('');
+        str2 = str2.toLowerCase().split('');
+        // const arr = new Array(26);
+        // arr.fill(0);
+        var freqArr = {};
+        
         str1.forEach((e,i) => {
-            arr[e-'0']++;
+            if (freqArr[e]) {
+                freqArr[e]++;
+             } else {
+                freqArr[e] = 1;
+             }
         });
-        str1.forEach((e,i) => {
-            arr[e-'0']--;
+        console.log(freqArr)
+        str2.forEach((e,i) => {
+            if (freqArr[e]) {
+                freqArr[e]--;
+             } else {
+                freqArr[e] = -1;
+             }
         })
+        console.log(freqArr)
         let x =0;
-        arr.forEach(e => {
+        Object.values(freqArr).forEach(e => {
             x = x + Math.abs(e);
         })
-        console.log(x);
+        console.log("Returning xx ="+x);
+        console.log(x%6)
         return x;
      };
 
@@ -58,7 +69,6 @@ const App = () => {
         else{
             
             const x = find(inputs.input1 , inputs.input2)%6;
-            console.log(x)
             let ans = ''
             switch(x){
                 case 1: ans="Friends";break;
